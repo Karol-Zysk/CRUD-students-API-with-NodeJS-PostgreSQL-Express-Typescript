@@ -6,6 +6,8 @@ import studentRoutes from "./routes/studentRoutes";
 const app = express();
 const port = process.env.PORT || 3000;
 
+;
+
 app.get("/", (req: Request, res: Response) => {
   res.send("elo");
 });
@@ -13,5 +15,5 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/v1/students", studentRoutes);
 
 app.listen(port, () => {
-  console.log(`app listenining on port ${port} `);
+  console.log(`app listenining on port ${port}  `);
 });
