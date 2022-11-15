@@ -7,6 +7,7 @@ import {
   deleteStudentQuery,
   getStudentByIdQuerry,
   getStudentsQuerry,
+  updateStudentQuery,
 } from "../student/queries";
 
 export const getStudents = (req: Request, res: Response) => {
@@ -60,6 +61,29 @@ export const deleteStudent = (req: Request, res: Response) => {
         (error: Error, results: QueryResult) => {
           if (error) throw error;
           res.status(204);
+        }
+      );
+    }
+  );
+};
+export const updateStudent = (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const { name } = req.body;
+
+  pool.query(
+    getStudentByIdQuerry,
+    [id],
+    (error: Error, results: QueryResult) => {
+      const noStudentFound = !results.rows.length;
+      if (noStudentFound) {
+        res.send("no student found with this id");
+      }
+      pool.query(
+        updateStudentQuery,
+        [name, id],
+        (error: Error, results: QueryResult) => {
+          if (error) throw error;
+          res.status(200).send("Student updated successfully");
         }
       );
     }
